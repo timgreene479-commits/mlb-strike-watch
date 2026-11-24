@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MLB Strike Watch — The Countdown to Baseball's Next Work Stoppage</title>
+<meta name="description" content="A live countdown to the MLB lockout: the CBA expires 11:59 p.m. ET, December 1, 2026. News, history, and what happens next.">
+<style>
+:root{
+  --bg:#0a0f1c; --panel:#111a2e; --panel2:#0d1526; --line:#1e2a44;
+  --gold:#e0a92a; --gold-dim:#b98d2f; --red:#e04b4b; --green:#3ecf8e;
+  --text:#e8edf7; --muted:#8d9ab5; --muted2:#5f6d8a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+/* header */
+header{position:sticky;top:0;z-index:50;background:rgba(10,15,28,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;max-width:1080px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px;font-size:17px}
+.logo .ball{font-size:20px}
+.logo span.gold{color:var(--gold)}
+.status-chip{font-size:12px;font-weight:700;letter-spacing:1px;padding:6px 12px;border-radius:999px;border:1px solid var(--red);color:var(--red);white-space:nowrap}
+.status-chip b{color:var(--red)}
+/* hero */
+.hero{position:relative;padding:88px 0 70px;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.28;filter:saturate(.8)}
+.hero .grad{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,15,28,.55) 0%,rgba(10,15,28,.92) 78%,var(--bg) 100%)}
+.hero .wrap{position:relative;text-align:center}
+.eyebrow{font-size:13px;letter-spacing:3px;color:var(--gold);font-weight:700;text-transform:uppercase}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.05;margin:14px 0 10px;font-weight:900;letter-spacing:-.5px}
+h1 .thin{display:block;font-size:clamp(16px,2.6vw,22px);font-weight:500;color:var(--muted);letter-spacing:2px;margin-top:10px;text-transform:uppercase}
+.hero p.lede{max-width:640px;margin:18px auto 0;color:var(--muted);font-size:17px}
+/* countdown */
+.cd{margin:44px auto 0;max-width:760px;background:rgba(17,26,46,.86);border:1px solid var(--line);border-radius:18px;padding:26px 22px;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.cd-label{font-size:13px;letter-spacing:2.5px;font-weight:800;color:var(--gold);text-transform:uppercase}
+.cd-label.red{color:var(--red)}
+.cd-row{display:flex;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap}
+.cd-cell{min-width:96px;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 8px 10px}
+.cd-num{font-size:clamp(30px,5.5vw,46px);font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px}
+.cd-unit{font-size:11px;letter-spacing:2px;color:var(--muted2);text-transform:uppercase;margin-top:2px}
+.cd-sub{margin-top:14px;font-size:13px;color:var(--muted)}
+.cd-sub b{color:var(--text)}
+/* sections */
+section{padding:58px 0}
+.sec-head{margin-bottom:26px}
+.kicker{font-size:12px;letter-spacing:2.5px;font-weight:800;color:var(--gold);text-transform:uppercase}
+h2{font-size:clamp(24px,4vw,34px);margin-top:6px;font-weight:800;letter-spacing:-.3px}
+.sec-sub{color:var(--muted);margin-top:6px;max-width:660px}
+/* timeline */
+.tl{border-left:2px solid var(--line);margin-left:8px}
+.tl-item{position:relative;padding:0 0 26px 26px}
+.tl-item::before{content:"";position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(224,169,42,.15)}
+.tl-item.red::before{background:var(--red);box-shadow:0 0 0 4px rgba(224,75,75,.15)}
+.tl-date{font-size:12px;font-weight:800;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase}
+.tl-item.red .tl-date{color:var(--red)}
+.tl-item h3{font-size:17px;margin:4px 0 4px}
+.tl-item p{color:var(--muted);font-size:15px;max-width:680px}
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.card .ic{font-size:24px}
+.card h3{font-size:17px;margin:10px 0 6px}
+.card p{color:var(--muted);font-size:14.5px}
+/* positions */
+.versus{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.versus{grid-template-columns:1fr}}
+.side{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.side .head{padding:16px 20px;font-weight:800;letter-spacing:.5px;border-bottom:1px solid var(--line);font-size:15px}
+.side.league .head{color:#7fb4ff}
+.side.union .head{color:#ff9d7f}
+.side ul{list-style:none;padding:16px 20px}
+.side li{padding:8px 0;border-bottom:1px dashed var(--line);font-size:14.5px;color:var(--muted)}
+.side li:last-child{border-bottom:0}
+.side li b{color:var(--text);font-weight:700}
+/* history table */
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);text-align:left;padding:12px 16px;background:var(--panel2);border-bottom:1px solid var(--line)}
+td{padding:12px 16px;border-bottom:1px solid var(--line);font-size:14.5px;color:var(--muted)}
+td b{color:var(--text)}
+tr:last-child td{border-bottom:0}
+tr.now td{background:rgba(224,75,75,.07)}
+tr.now td b{color:var(--red)}
+/* articles */
+.art{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:760px){.art{grid-template-columns:1fr}}
+.article{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:6px}
+.article .meta{font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);font-weight:700}
+.article h3{font-size:16.5px;line-height:1.35}
+.article h3 a{color:var(--text)}
+.article h3 a:hover{color:var(--gold)}
+.article p{color:var(--muted);font-size:14px}
+.article .date{font-size:12px;color:var(--muted2)}
+/* photo strip */
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:10px}
+.strip figure{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+.strip img{width:100%;height:190px;object-fit:cover;display:block;filter:saturate(.85)}
+.strip figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 12px 10px;background:linear-gradient(transparent,rgba(5,8,16,.9));font-size:12px;color:var(--muted)}
+/* footer */
+footer{border-top:1px solid var(--line);padding:34px 0 44px;color:var(--muted2);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:7px;animation:p 1.6s infinite}
+@keyframes p{0%,100%{opacity:1}50%{opacity:.25}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <div class="logo"><span class="ball">⚾</span> MLB <span class="gold">STRIKE WATCH</span></div>
+    <div class="status-chip" id="chip"><span class="pulse"></span><b>LOCKOUT EXPECTED DEC 2</b></div>
+  </div>
+</header>
+
+<div class="hero">
+  <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/92/A_Great_Night_at_Yankee_Stadium.jpg/1920px-A_Great_Night_at_Yankee_Stadium.jpg" alt="Yankee Stadium at night">
+  <div class="grad"></div>
+  <div class="wrap">
+    <div class="eyebrow">The clock is running</div>
+    <h1>The season is over.<br>The fight over the next one has begun.
+      <span class="thin">Live countdown to the CBA deadline</span>
+    </h1>
+    <p class="lede">Major League Baseball's collective bargaining agreement expires at <b style="color:var(--text)">11:59 p.m. ET on Tuesday, December 1, 2026</b>. When it lapses, owners are expected to lock out the players — the 10th work stoppage since 1972.</p>
+
+    <div class="cd">
+      <div class="cd-label" id="cdLabel">Time until the CBA expires</div>
+      <div class="cd-row" id="cdRow">
+        <div class="cd-cell"><div class="cd-num" id="cD">–</div><div class="cd-unit">days</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cH">–</div><div class="cd-unit">hours</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cM">–</div><div class="cd-unit">minutes</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cS">–</div><div class="cd-unit">seconds</div></div>
+      </div>
+      <div class="cd-sub" id="cdSub"></div>
+    </div>
+  </div>
+</div>
+
+<section id="now">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Right now</div>
+      <h2>Where the talks stand</h2>
+      <p class="sec-sub">Owner meetings in Manhattan this week were, in Rob Manfred's words, "almost exclusively" about labor. Both sides are dug in, and the calendar is doing the talking.</p>
+    </div>
+    <div class="tl">
+      <div class="tl-item"><div class="tl-date">Mon, Nov 3</div><h3>Owners table their latest CBA proposal</h3><p>MLB sends a proposal centered on the issue the union has fought for 30 years: a salary cap — paired, for the first time in years, with a spending floor.</p></div>
+      <div class="tl-item"><div class="tl-date">Tue, Nov 17</div><h3>Manhattan meetings go almost exclusively to labor</h3><p>With the CBA two weeks from expiring, owners gather in New York and labor swallows the agenda.</p></div>
+      <div class="tl-item"><div class="tl-date">Wed, Nov 18</div><h3>Manfred: no deal without a cap and a floor</h3><p>The commissioner says he "can't imagine" owners ratifying a new CBA without a salary cap and floor, with the Dodgers' back-to-back titles and their payroll looming over the push.</p></div>
+      <div class="tl-item"><div class="tl-date">Mon, Nov 23</div><h3>MLB sweetens the money, the union looks elsewhere</h3><p>MLB raises its minimum-salary offer to $1 million for 2027 — up $220,000 from 2026 — grows the pre-arbitration bonus pool 30% to $65 million, and offers $500,000 bonuses to veterans on cheap one-year deals. The MLBPA counters by pressing for more than $950 million in revenue-sharing help for low-revenue markets and eyes the league's media deals.</p></div>
+      <div class="tl-item red"><div class="tl-date">Tue, Dec 1 · 11:59 p.m. ET</div><h3>The CBA expires. Lockout expected at 12:01 a.m.</h3><p>If there's no deal, owners are expected to lock the players out the moment the agreement lapses — freezing trades, free agency and the entire offseason.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--panel2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">What it means</div>
+      <h2>If the doors close at 12:01 a.m.</h2>
+      <p class="sec-sub">A lockout isn't a strike. It's the owners closing the shop — and it freezes everything fans care about in the offseason.</p>
+    </div>
+    <div class="grid">
+      <div class="card"><div class="ic">🚫</div><h3>Trades and free agency stop</h3><p>No signings, no trades, no deals. The hot stove goes cold the same week the Winter Meetings would have been the center of the baseball world.</p></div>
+      <div class="card"><div class="ic">🔒</div><h3>Player activity halts</h3><p>Players can't use team facilities, talk to club staff, or work out under team supervision. Communication between the sides freezes.</p></div>
+      <div class="card"><div class="ic">📅</div><h3>The clock eats the calendar</h3><p>The 2021 lockout lasted 99 days and pushed back Opening Day. A longer one could threaten the 2027 season itself.</p></div>
+      <div class="card"><div class="ic">⚖️</div><h3>One issue sits under all of it</h3><p>A salary cap and floor. The last time owners formally proposed one, in 1994, the players struck for more than seven months and the World Series was canceled.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="issues">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">The two sides</div>
+      <h2>MLB's offer vs. the union's answer</h2>
+      <p class="sec-sub">As of November 23, 2026.</p>
+    </div>
+    <div class="versus">
+      <div class="side league">
+        <div class="head">MLB / THE OWNERS</div>
+        <ul>
+          <li><b>Salary cap and floor</b> — the centerpiece, and the line Manfred won't cross.</li>
+          <li><b>Minimum salary to $1 million</b> in 2027, up $220,000 from 2026.</li>
+          <li><b>Pre-arbitration bonus pool up 30%</b>, from $50 million to $65 million.</li>
+          <li><b>$500,000 bonuses</b> for veterans signing one-year deals of $10 million or less.</li>
+          <li><b>Free agency at five years</b> for players 30 and older.</li>
+        </ul>
+      </div>
+      <div class="side union">
+        <div class="head">THE MLBPA / THE PLAYERS</div>
+        <ul>
+          <li><b>No salary cap.</b> The union's opposition stretches back decades.</li>
+          <li><b>More than $950 million</b> in revenue-sharing assistance to low-revenue markets, up from roughly $700 million.</li>
+          <li><b>$20 million rewards</b> maintained for revenue-sharing teams that make the playoffs or outplay the worst playoff team.</li>
+          <li><b>Eyes the media deals</b> — the union is pressing on where the league's money comes from.</li>
+          <li><b>Points to the record:</b> 93% of players settled arbitration without a hearing under the current CBA.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="history" style="background:var(--panel2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Fifty years of stoppages</div>
+      <h2>Baseball has been here before. Nine times.</h2>
+      <p class="sec-sub">Since 1972, MLB has had nine work stoppages. A December lockout would be the tenth.</p>
+    </div>
+    <div class="tblwrap">
+      <table>
+        <tr><th>Stoppage</th><th>Type</th><th>Length</th><th>What happened</th></tr>
+        <tr><td><b>1972</b></td><td>Strike</td><td>13 days</td><td>First players' strike; the season opened late.</td></tr>
+        <tr><td><b>1973</b></td><td>Lockout</td><td>Spring</td><td>Owners locked players out over arbitration rules.</td></tr>
+        <tr><td><b>1976</b></td><td>Lockout</td><td>Spring</td><td>Fought over free agency coming into being.</td></tr>
+        <tr><td><b>1980</b></td><td>Strike</td><td>8 days</td><td>Short walkout over free-agent compensation.</td></tr>
+        <tr><td><b>1981</b></td><td>Strike</td><td>50 days</td><td>Season split in two; a summer without baseball.</td></tr>
+        <tr><td><b>1985</b></td><td>Strike</td><td>2 days</td><td>Quick mid-August strike over salary arbitration.</td></tr>
+        <tr><td><b>1990</b></td><td>Lockout</td><td>32 days</td><td>Owners locked the gates over collusion fallout.</td></tr>
+        <tr><td><b>1994–95</b></td><td>Strike</td><td>232 days</td><td>The big one: the World Series was canceled for the first time in 90 years.</td></tr>
+        <tr><td><b>2021–22</b></td><td>Lockout</td><td>99 days</td><td>Delayed Opening Day; a deal was struck in March.</td></tr>
+        <tr class="now"><td><b>2026</b></td><td>Lockout expected</td><td>Dec 2 → ?</td><td>CBA expires Dec 1 at 11:59 p.m. ET. Owners are expected to lock the players out.</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="news">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">The latest</div>
+      <h2>What's being written</h2>
+      <p class="sec-sub">Live coverage from the outlets on the beat. Each card links straight to the source.</p>
+    </div>
+    <div class="art">
+      <div class="article"><div class="meta">ESPN · Nov 23, 2026</div><h3><a href="https://www.espn.com/mlb/story/_/id/50576198/mlb-offers-higher-minimum-player-salaries-lockout-looms">As lockout looms, MLB raises minimum salary offer while union eyes media deals</a></h3><p>The league's latest sweeteners — a $1 million minimum, a bigger bonus pool — and where the union is pushing back.</p><div class="date">Alden Gonzalez</div></div>
+      <div class="article"><div class="meta">ESPN · Nov 23, 2026</div><h3><a href="https://www.espn.com/mlb/story/_/id/49425027/mlb-labor-cba-owners-players-union-salary-cap-draft-proposals-mlbpa-negotiations-latest-updates">MLB labor battle: Latest updates, full coverage</a></h3><p>ESPN's running tracker of every proposal, counter and deadline in the CBA fight.</p><div class="date">ESPN staff</div></div>
+      <div class="article"><div class="meta">Yahoo Sports · Nov 18, 2026</div><h3><a href="https://sports.yahoo.com/mlb/article/mlb-lockout-watch-with-less-than-2-weeks-before-a-shutdown-heres-what-baseball-fans-need-to-know-214839820.html">MLB lockout watch: With less than 2 weeks before a shutdown, what fans need to know</a></h3><p>A clean explainer on what a lockout is, why the two sides are far apart, and what happens to the offseason.</p><div class="date">Russell Dorsey</div></div>
+      <div class="article"><div class="meta">Yahoo Sports · Nov 19, 2026</div><h3><a href="https://sports.yahoo.com/mlb/breaking-news/article/with-lockout-imminent-rob-manfred-cant-imagine-mlb-owners-ratifying-new-cba-without-salary-cap-floor-223700548.html">Manfred 'can't imagine' owners ratifying a CBA without a salary cap and floor</a></h3><p>The commissioner plants the flag on the issue that broke the 1994 season.</p><div class="date">Andy Backstrom</div></div>
+      <div class="article"><div class="meta">USA TODAY via AOL · Nov 17, 2026</div><h3><a href="https://www.aol.com/articles/mlb-lockout-countdown-where-owners-113046000.html">MLB lockout countdown: Where owners and players stand as the CBA nears expiration</a></h3><p>The full picture of the negotiation, with the 1994 ghosts everywhere in it.</p><div class="date">Kristie Ackert</div></div>
+      <div class="article"><div class="meta">AJC · Nov 23, 2026</div><h3><a href="https://www.ajc.com/sports/2026/11/mlb-impending-lockout-questions/">MLB's impending lockout has generated a lot of questions</a></h3><p>The fan's guide: what a lockout means, when it starts, and what it threatens.</p><div class="date">Chad Bishop</div></div>
+      <div class="article"><div class="meta">ESPN · Nov 3, 2026</div><h3><a href="https://www.espn.com/mlb/story/_/id/50370123/lockout-salary-cap-cba-labor-battle-faq">Will there be a lockout? Salary cap? The MLB CBA battle FAQ</a></h3><p>Everything about how a CBA fight works, the people in the room, and the 1994 comparison.</p><div class="date">ESPN</div></div>
+      <div class="article"><div class="meta">ESPN · Nov 18, 2026</div><h3><a href="https://www.espn.com/mlb/story/_/id/50523785/rob-manfred-says-mlb-owners-compromise-salary-cap">Manfred says MLB owners won't OK deal without cap as lockout looms</a></h3><p>The 10th work stoppage since 1972 is on the table, and the cap is the reason why.</p><div class="date">Jorge Castillo</div></div>
+    </div>
+    <div class="strip">
+      <figure><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Wrigley_Field_in_line_with_sign.jpg/1920px-Wrigley_Field_in_line_with_sign.jpg" alt="Wrigley Field marquee"><figcaption>Wrigley Field, waiting</figcaption></figure>
+      <figure><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Fenway_Parks_%22Lone_Red_Seat%22_%282630316084%29.jpg/1920px-Fenway_Parks_%22Lone_Red_Seat%22_%282630316084%29.jpg" alt="The lone red seat at Fenway Park"><figcaption>The lone red seat, Fenway Park</figcaption></figure>
+      <figure><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Nationals_dugout_from_the_Nationals_and_Marlins_at_Nationals_Park%2C_August_23%2C_2020.jpg/1920px-Nationals_dugout_from_the_Nationals_and_Marlins_at_Nationals_Park%2C_August_23%2C_2020.jpg" alt="An empty dugout at Nationals Park"><figcaption>An empty dugout, Nationals Park</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>MLB STRIKE WATCH — an independent fan site. Not affiliated with MLB or the MLBPA.</div>
+    <div>Sources: ESPN, Yahoo Sports, USA Today, AJC. Last updated Nov 23, 2026.</div>
+  </div>
+</footer>
+
+<script>
+var DEADLINE = new Date("2026-12-01T23:59:59-05:00").getTime();
+function pad(n){return (n<10?"0":"")+n}
+function tick(){
+  var now = Date.now();
+  var d = DEADLINE - now;
+  var D=Math.floor(Math.abs(d)/86400000);
+  var H=Math.floor(Math.abs(d)%86400000/3600000);
+  var M=Math.floor(Math.abs(d)%3600000/60000);
+  var S=Math.floor(Math.abs(d)%60000/1000);
+  document.getElementById("cD").textContent=D;
+  document.getElementById("cH").textContent=pad(H);
+  document.getElementById("cM").textContent=pad(M);
+  document.getElementById("cS").textContent=pad(S);
+  if(d>0){
+    document.getElementById("cdLabel").textContent="Time until the CBA expires";
+    document.getElementById("cdLabel").className="cd-label";
+    document.getElementById("chip").innerHTML='<span class="pulse"></span><b>LOCKOUT EXPECTED DEC 2</b>';
+    document.getElementById("cdSub").innerHTML='<b>Dec 1, 11:59 p.m. ET</b> — the moment it lapses, the owners are expected to lock the players out.';
+  } else {
+    var days = Math.floor((now - DEADLINE)/86400000) + 1;
+    document.getElementById("cdLabel").textContent="The lockout is on — day " + days;
+    document.getElementById("cdLabel").className="cd-label red";
+    document.getElementById("chip").innerHTML='<span class="pulse"></span><b>LOCKED OUT — DAY ' + days + '</b>';
+    document.getElementById("cdSub").innerHTML='<b>The CBA expired Dec 1, 2026.</b> The offseason is frozen: no trades, no free agency, no deal yet.';
+  }
+}
+tick(); setInterval(tick,1000);
+</script>
+</body>
+</html>
