@@ -258,12 +258,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   <div class="wrap">
     <div>MLB STRIKE WATCH — an independent fan site. Not affiliated with MLB or the MLBPA.</div>
     <div>Sources: ESPN, Yahoo Sports, USA Today, AJC. Last updated Nov 23, 2026.</div>
-    <div>Sources: ESPN, Yahoo Sports, USA Today, AJC. Last updated Nov 23, 2026.</div>
     <div id="visits" style="opacity:.7;font-variant-numeric:tabular-nums;">&nbsp;</div>
   </div>
 </footer>
 <script>
-fetch("https://abacus.jasoncameron.dev/hit/mlb-strike-watch-visits").then(function(r){return r.text()}).then(function(n){var e=document.getElementById("visits");if(e&&n)e.textContent=n+" visits since launch";}).catch(function(){});
+fetch("https://abacus.jasoncameron.dev/hit/mlb-strike-watch/visits").then(function(r){return r.json()}).then(function(d){var e=document.getElementById("visits");if(e&&d&&d.value)e.textContent=d.value+" visits since launch";}).catch(function(){});
 </script>
 
 <script>
